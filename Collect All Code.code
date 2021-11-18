@@ -1,0 +1,127 @@
+//Source by Riifuu
+//Fixed Bug by Dav
+
+//first open main.cpp
+//then find if (btn == "withdraw")
+//after that replace the old code with
+if (btn == "withdraw")
+								{
+									if (world->owner != "" && !isWorldOwner(peer, world)) continue;
+									int xxx = pData->lastPunchX;
+									int yyy = pData->lastPunchY;
+									if (xxx < 0 && yyy < 0) continue;
+									int withdrawcpy = world->items.at(xxx + (yyy * world->width)).vdraw;
+									int withdrawcpy2 = world->items.at(xxx + (yyy * world->width)).vdraw;
+									if (withdrawcpy != 0) {
+										if (withdrawcpy % 100 == 0) {
+											if (withdrawcpy > 20000) {
+												int realid = world->items.at(xxx + (yyy * world->width)).vid;
+												int priceid = world->items.at(xxx + (yyy * world->width)).vprice;
+												if (CheckItemMaxed(peer, 7188, withdrawcpy / 10000)) {
+													Player::OnTalkBubble(peer, pData->netID, "`wI dont have free space to collect " + to_string(withdrawcpy) + " World Locks!", 0, true);
+													continue;
+												}
+												bool success = true;
+												SaveItemMoreTimes(7188, withdrawcpy / 10000, peer, success, pData->rawName + " collected from Vending Machine");
+												Player::OnTalkBubble(peer, pData->netID, "`wYou collected " + to_string(withdrawcpy / 10000) + " Blue Gem Locks.", 0, true);
+												world->items.at(xxx + (yyy * world->width)).vdraw = withdrawcpy % 10000;
+												ENetPeer* currentPeer;
+												for (currentPeer = server->peers; currentPeer < &server->peers[server->peerCount]; ++currentPeer) {
+													if (currentPeer->state != ENET_PEER_STATE_CONNECTED || currentPeer->data == NULL) continue;
+													if (isHere(peer, currentPeer)) {
+														if (world->items.at(xxx + (yyy * world->width)).opened && world->items.at(xxx + (yyy * world->width)).vcount < world->items.at(xxx + (yyy * world->width)).vprice) {
+															UpdateVend(currentPeer, xxx, yyy, 0, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+														}
+														else UpdateVend(currentPeer, xxx, yyy, realid, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+													}
+												}
+												break;
+											}
+											if (CheckItemMaxed(peer, 1796, withdrawcpy / 100)) {
+												Player::OnTalkBubble(peer, pData->netID, "`wI dont have free space to collect " + to_string(withdrawcpy) + " Diamond Locks!", 0, true);
+												continue;
+											}
+											int realid = world->items.at(xxx + (yyy * world->width)).vid;
+											int priceid = world->items.at(xxx + (yyy * world->width)).vprice;
+											bool success = true;
+											SaveItemMoreTimes(1796, withdrawcpy / 100, peer, success, pData->rawName + " collected from Vending Machine");
+											world->items.at(xxx + (yyy * world->width)).vdraw = withdrawcpy % 100;
+											if (world->items.at(xxx + (yyy * world->width)).vcount == 0) {
+												priceid = 0;
+												realid = 0;
+											}
+											world->items.at(xxx + (yyy * world->width)).vdraw = 0;
+											ENetPeer* currentPeer;
+											for (currentPeer = server->peers; currentPeer < &server->peers[server->peerCount]; ++currentPeer) {
+												if (currentPeer->state != ENET_PEER_STATE_CONNECTED || currentPeer->data == NULL) continue;
+												if (isHere(peer, currentPeer)) {
+													if (world->items.at(xxx + (yyy * world->width)).opened && world->items.at(xxx + (yyy * world->width)).vcount < world->items.at(xxx + (yyy * world->width)).vprice) {
+														UpdateVend(currentPeer, xxx, yyy, 0, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+													}
+													else UpdateVend(currentPeer, xxx, yyy, realid, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+												}
+											}
+										}
+										else if (withdrawcpy > 201) {
+											int realid = world->items.at(xxx + (yyy * world->width)).vid;
+											int priceid = world->items.at(xxx + (yyy * world->width)).vprice;
+											if (withdrawcpy > 25250) {
+												if (CheckItemMaxed(peer, 7188, withdrawcpy / 10000)) {
+													Player::OnTalkBubble(peer, pData->netID, "`wI dont have free space to collect " + to_string(withdrawcpy) + " World Locks!", 0, true);
+													continue;
+												}
+												bool success = true;
+												SaveItemMoreTimes(7188, withdrawcpy / 10000, peer, success, pData->rawName + " collected from Vending Machine");
+												Player::OnTalkBubble(peer, pData->netID, "`wYou collected " + to_string(withdrawcpy / 10000) + " Blue Gem Locks.", 0, true);
+												world->items.at(xxx + (yyy * world->width)).vdraw = withdrawcpy % 10000;
+												ENetPeer* currentPeer;
+												for (currentPeer = server->peers; currentPeer < &server->peers[server->peerCount]; ++currentPeer) {
+													if (currentPeer->state != ENET_PEER_STATE_CONNECTED || currentPeer->data == NULL) continue;
+													if (isHere(peer, currentPeer)) {
+														if (world->items.at(xxx + (yyy * world->width)).opened && world->items.at(xxx + (yyy * world->width)).vcount < world->items.at(xxx + (yyy * world->width)).vprice) {
+															UpdateVend(currentPeer, xxx, yyy, 0, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+														}
+														else UpdateVend(currentPeer, xxx, yyy, realid, false, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+													}
+												}
+												break;
+											}
+											if (CheckItemMaxed(peer, 242, withdrawcpy % 100)) {
+												Player::OnTalkBubble(peer, pData->netID, "`wI dont have free space to collect " + to_string(withdrawcpy) + " World Locks!", 0, true);
+												continue;
+											}
+											if (CheckItemMaxed(peer, 1796, withdrawcpy / 100)) {
+												Player::OnTalkBubble(peer, pData->netID, "`wI dont have free space to collect " + to_string(withdrawcpy) + " Diamond Locks!", 0, true);
+												continue;
+											}
+											bool success = true;
+											SaveItemMoreTimes(1796, withdrawcpy / 100, peer, success, pData->rawName + " collected from Vending Machine");
+											SaveItemMoreTimes(242, withdrawcpy % 100, peer, success, pData->rawName + " collected from Vending Machine");
+											Player::OnTalkBubble(peer, pData->netID, "`wYou collected " + to_string(withdrawcpy / 100) + " Diamond locks, " + to_string(withdrawcpy % 100) + " World locks.", 0, true);
+											if (world->items.at(xxx + (yyy * world->width)).vcount == 0) {
+												priceid = 0;
+												realid = 0;
+												//}
+
+											//}
+												world->items.at(xxx + (yyy * world->width)).vdraw = 0;
+												ENetPeer* currentPeer;
+												for (currentPeer = server->peers; currentPeer < &server->peers[server->peerCount]; ++currentPeer) {
+													if (currentPeer->state != ENET_PEER_STATE_CONNECTED || currentPeer->data == NULL) continue;
+													if (isHere(peer, currentPeer)) {
+														if (world->items.at(xxx + (yyy * world->width)).opened && world->items.at(xxx + (yyy * world->width)).vcount < world->items.at(xxx + (yyy * world->width)).vprice) {
+															UpdateVend(currentPeer, xxx, yyy, 0, true, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+														}
+														else UpdateVend(currentPeer, xxx, yyy, realid, true, priceid, world->items.at(xxx + (yyy * world->width)).background, world->items.at(xxx + (yyy * world->width)).opened);
+													}
+												}
+											}
+											else {
+												Player::OnTalkBubble(peer, pData->netID, "`wHuh?", 0, true);
+											}
+										}
+									}
+									//catch (const std::out_of_range& e) {
+									//	std::cout << e.what() << std::endl;
+									//}
+								}
