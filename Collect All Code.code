@@ -1,6 +1,3 @@
-//Source by Riifuu
-//Fixed Bug by Dav
-
 //first open main.cpp
 //then find if (btn == "withdraw")
 //after that replace the old code with
